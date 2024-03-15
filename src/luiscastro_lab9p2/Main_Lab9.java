@@ -230,9 +230,14 @@ public class Main_Lab9 extends javax.swing.JFrame {
 
     private void btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarMouseClicked
         // TODO add your handling code here:
-        AdmArchivos ad = new AdmArchivos(pathArc, ta_archivo);
-        ad.escribirArchivo();
-        JOptionPane.showMessageDialog(this, "Se ha guardado exitosamente en el archivo!");
+        if(archivo == null){
+            JOptionPane.showMessageDialog(this, "No ha seleccionado ningun archivo!");
+        }else{
+            AdmArchivos ad = new AdmArchivos(pathArc, ta_archivo);
+            ad.escribirArchivo();
+            JOptionPane.showMessageDialog(this, "Se ha guardado exitosamente en el archivo!");
+        }
+        
     }//GEN-LAST:event_btn_guardarMouseClicked
 
     /**
