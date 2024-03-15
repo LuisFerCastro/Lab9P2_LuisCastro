@@ -8,6 +8,7 @@ import java.awt.TextArea;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.Scanner;
 
 /**
  *
@@ -38,15 +39,44 @@ public class AdmArchivos {
     }
     
     public void escribirArchivo(){
+        String texto = text.getText();
         FileWriter fw = null;
         BufferedWriter bw = null;
+        try {
+            fw = new FileWriter(archivo,false);
+            bw = new BufferedWriter(fw);
+            bw.write(texto);
+            bw.flush();
+            try {
+                bw.close();
+                fw.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    public void leerArchivo(){
+        text.setText("");
+        Scanner sc = null;
         if(archivo.exists()){
             try {
-                fw = new FileWriter(archivo);
-                
+                sc = new Scanner(archivo);
+                while (sc.hasNext()) {
+                String next = sc.next();
+                text.append(next);
+                }
+                try {
+                    sc.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             } catch (Exception e) {
+                e.printStackTrace();
             }
         }
-        
     }
 }

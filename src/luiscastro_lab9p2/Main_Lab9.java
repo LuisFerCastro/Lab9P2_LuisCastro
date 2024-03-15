@@ -4,6 +4,7 @@
  */
 package luiscastro_lab9p2;
 
+import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -204,7 +205,8 @@ public class Main_Lab9 extends javax.swing.JFrame {
         jfc.setFileFilter(filtro);
         int seleccion = jfc.showOpenDialog(this);
         if(seleccion == JFileChooser.APPROVE_OPTION){
-            
+            String pathArc = jfc.getSelectedFile().getPath();
+           
         }
     }//GEN-LAST:event_btn_subirMouseClicked
 
@@ -259,4 +261,5 @@ public class Main_Lab9 extends javax.swing.JFrame {
     private javax.swing.JPanel pn_in2;
     private javax.swing.JTextArea ta_archivo;
     // End of variables declaration//GEN-END:variables
+    File archivo;
 }
