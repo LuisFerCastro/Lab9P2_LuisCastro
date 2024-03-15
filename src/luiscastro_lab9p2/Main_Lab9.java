@@ -4,6 +4,9 @@
  */
 package luiscastro_lab9p2;
 
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author lfern
@@ -17,11 +20,14 @@ public class Main_Lab9 extends javax.swing.JFrame {
         initComponents();
         Hora h = new Hora(hora);
         Fecha f = new Fecha(fecha);
+        BarraCargar bc = new BarraCargar(pb_1);
+        Thread pbC = new Thread(bc);
         Thread horaT = new Thread(h);
         Thread fechaT = new Thread(f);
         
         horaT.start();
         fechaT.start();
+
     }
 
     /**
@@ -62,6 +68,11 @@ public class Main_Lab9 extends javax.swing.JFrame {
         lb_titulo.setText("Boroa Cloud");
 
         btn_subir.setText("Subir Archivo");
+        btn_subir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_subirMouseClicked(evt);
+            }
+        });
 
         lb_archivo.setForeground(new java.awt.Color(0, 0, 0));
         lb_archivo.setText("Subiendo Archivo.....");
@@ -184,6 +195,18 @@ public class Main_Lab9 extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_subirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_subirMouseClicked
+        // TODO add your handling code here:
+        JFileChooser jfc = new JFileChooser();
+        
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Texto", "txt");
+        jfc.setFileFilter(filtro);
+        int seleccion = jfc.showOpenDialog(this);
+        if(seleccion == JFileChooser.APPROVE_OPTION){
+            
+        }
+    }//GEN-LAST:event_btn_subirMouseClicked
 
     /**
      * @param args the command line arguments
