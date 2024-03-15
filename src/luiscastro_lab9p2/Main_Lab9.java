@@ -6,6 +6,7 @@ package luiscastro_lab9p2;
 
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -21,8 +22,6 @@ public class Main_Lab9 extends javax.swing.JFrame {
         initComponents();
         Hora h = new Hora(hora);
         Fecha f = new Fecha(fecha);
-        BarraCargar bc = new BarraCargar(pb_1);
-        Thread pbC = new Thread(bc);
         Thread horaT = new Thread(h);
         Thread fechaT = new Thread(f);
         
@@ -49,6 +48,7 @@ public class Main_Lab9 extends javax.swing.JFrame {
         lb_archivoTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ta_archivo = new javax.swing.JTextArea();
+        btn_guardar = new javax.swing.JButton();
         lb_tituloHora = new javax.swing.JLabel();
         lb_bienvenido = new javax.swing.JLabel();
         lb_tituloFecha = new javax.swing.JLabel();
@@ -87,6 +87,13 @@ public class Main_Lab9 extends javax.swing.JFrame {
         ta_archivo.setRows(5);
         jScrollPane1.setViewportView(ta_archivo);
 
+        btn_guardar.setText("Guardar");
+        btn_guardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_guardarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pn_in2Layout = new javax.swing.GroupLayout(pn_in2);
         pn_in2.setLayout(pn_in2Layout);
         pn_in2Layout.setHorizontalGroup(
@@ -109,6 +116,10 @@ public class Main_Lab9 extends javax.swing.JFrame {
                         .addGap(182, 182, 182)
                         .addComponent(lb_archivoTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(34, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pn_in2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_guardar)
+                .addGap(189, 189, 189))
         );
         pn_in2Layout.setVerticalGroup(
             pn_in2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,9 +134,11 @@ public class Main_Lab9 extends javax.swing.JFrame {
                 .addComponent(pb_1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lb_archivoTitulo)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_guardar)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         lb_tituloHora.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -199,16 +212,28 @@ public class Main_Lab9 extends javax.swing.JFrame {
 
     private void btn_subirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_subirMouseClicked
         // TODO add your handling code here:
-        JFileChooser jfc = new JFileChooser();
+        JFileChooser jfc = new JFileChooser("./");
         
         FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Texto", "txt");
         jfc.setFileFilter(filtro);
         int seleccion = jfc.showOpenDialog(this);
         if(seleccion == JFileChooser.APPROVE_OPTION){
-            String pathArc = jfc.getSelectedFile().getPath();
-           
+            archivo = jfc.getSelectedFile();
+            pathArc = archivo.getPath();
+            
+            BarraCargar bc = new BarraCargar(pb_1,ta_archivo, pathArc);
+            Thread pbC = new Thread(bc);
+            pbC.start();
+            
         }
     }//GEN-LAST:event_btn_subirMouseClicked
+
+    private void btn_guardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_guardarMouseClicked
+        // TODO add your handling code here:
+        AdmArchivos ad = new AdmArchivos(pathArc, ta_archivo);
+        ad.escribirArchivo();
+        JOptionPane.showMessageDialog(this, "Se ha guardado exitosamente en el archivo!");
+    }//GEN-LAST:event_btn_guardarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -246,6 +271,7 @@ public class Main_Lab9 extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_guardar;
     private javax.swing.JButton btn_subir;
     private javax.swing.JLabel fecha;
     private javax.swing.JLabel hora;
@@ -262,4 +288,5 @@ public class Main_Lab9 extends javax.swing.JFrame {
     private javax.swing.JTextArea ta_archivo;
     // End of variables declaration//GEN-END:variables
     File archivo;
+    String pathArc;
 }

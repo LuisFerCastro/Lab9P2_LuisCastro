@@ -5,10 +5,13 @@
 package luiscastro_lab9p2;
 
 import java.awt.TextArea;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Scanner;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -16,10 +19,11 @@ import java.util.Scanner;
  */
 public class AdmArchivos {
     File archivo;
-    TextArea text;
+    JTextArea text;
 
-    public AdmArchivos(String path) {
+    public AdmArchivos(String path, JTextArea t) {
         archivo = new File(path);
+        text = t;
     }
 
     public File getArchivo() {
@@ -30,11 +34,11 @@ public class AdmArchivos {
         this.archivo = archivo;
     }
 
-    public TextArea getText() {
+    public JTextArea getText() {
         return text;
     }
 
-    public void setText(TextArea text) {
+    public void setText(JTextArea text) {
         this.text = text;
     }
     
@@ -60,15 +64,20 @@ public class AdmArchivos {
     }
     
     public void leerArchivo(){
-        text.setText("");
         Scanner sc = null;
         if(archivo.exists()){
             try {
                 sc = new Scanner(archivo);
+                String line = "";
+                while(sc.hasNext()){
+                    line += sc.next() +" ";
+                    text.setText(line);
+                }
+                /*sc = new Scanner(archivo);
                 while (sc.hasNext()) {
                 String next = sc.next();
                 text.append(next);
-                }
+                }*/
                 try {
                     sc.close();
                 } catch (Exception e) {
@@ -78,5 +87,6 @@ public class AdmArchivos {
                 e.printStackTrace();
             }
         }
+        
     }
 }
